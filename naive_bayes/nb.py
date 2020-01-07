@@ -13,6 +13,11 @@ class NaiveBayes:
         return self
 
     def train(self):
+        """
+        Summaries dataset seperated by classes and calculate P(c):
+            - standard deviation
+            - mean
+        """
         if not self.data:
             raise ValueError("Dataset to train not found")
         separated = self._separate_dataset_by_class()
@@ -25,6 +30,9 @@ class NaiveBayes:
         return self
 
     def predict(self, row):
+        """
+        Predict class that input row belongs to
+        """
         probabilities = self.probs_class.copy()
         for c, summary in self.summaries.items():
             for i in range(len(summary)):
@@ -57,9 +65,11 @@ class NaiveBayes:
 def mean(numbers):
     return sum(numbers)/float(len(numbers))
 
+
 def variance(numbers):
     avg = mean(numbers)
     return sum([(num - avg)**2 for num in numbers])/(len(numbers) - 1)
+
 
 def read_data_from_file(input_file):
     data = []
@@ -75,10 +85,6 @@ def read_data_from_file(input_file):
                     continue
             data.append(data_point)
     return data
-
-def write_output(f, data):
-    for d in data:
-        print(d, file=f)
 
 
 if __name__ == '__main__':
@@ -120,7 +126,3 @@ if __name__ == '__main__':
         print(line2, file=f)
 
         print(error_count, file=f)
-
-
-
-
